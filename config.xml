@@ -7,12 +7,12 @@
     version     = "3.5.9">
     
     
-    <name>ABASE</name>
+    <name>AMA</name>
     <author email="rodrigo@rdorval.com" href="http://www.rdorval.com">
         Rodrigo Dias Dorval
     </author>
     <description>
-        Aplicativo oficial Adventistas Bahia e Sergipe.
+        Aplicativo oficial AMA.
     </description>
     
     <feature name="LocalStorage">
