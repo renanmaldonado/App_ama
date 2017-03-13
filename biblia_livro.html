@@ -41,62 +41,62 @@
         </script>
         <script>
         function GetQueryString(a)
+    {
+        a = a || window.location.search.substr(1).split('&').concat(window.location.hash.substr(1).split("&"));
+    
+        if (typeof a === "string")
+            a = a.split("#").join("&").split("&");
+    
+        // se não há valores, retorna um objeto vazio
+        if (!a) return {};
+    
+        var b = {};
+        for (var i = 0; i < a.length; ++i)
         {
-            a = a || window.location.search.substr(1).split('&').concat(window.location.hash.substr(1).split("&"));
-        
-            if (typeof a === "string")
-                a = a.split("#").join("&").split("&");
-        
-            // se não há valores, retorna um objeto vazio
-            if (!a) return {};
-        
-            var b = {};
-            for (var i = 0; i < a.length; ++i)
-            {
-                // obtem array com chave/valor
-                var p = a[i].split('=');
-        
-                // se não houver valor, ignora o parametro
-                if (p.length != 2) continue;
-        
-                // adiciona a propriedade chave ao objeto de retorno
-                // com o valor decodificado, substituindo `+` por ` `
-                // para aceitar URLs codificadas com `+` ao invés de `%20`
-                b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
-            }
-            // retorna o objeto criado
-            return b;
+            // obtem array com chave/valor
+            var p = a[i].split('=');
+    
+            // se não houver valor, ignora o parametro
+            if (p.length != 2) continue;
+    
+            // adiciona a propriedade chave ao objeto de retorno
+            // com o valor decodificado, substituindo `+` por ` `
+            // para aceitar URLs codificadas com `+` ao invés de `%20`
+            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
         }
+        // retorna o objeto criado
+        return b;
+    }
+    
+    // uso
+    var qs = GetQueryString();
+    
+    $(document).ready(function(){
         
-        // uso
-        var qs = GetQueryString();
+        var arquivo = 'json/biblia/indice.json';
+        document.getElementById("titulo").innerHTML = qs['titulo'];
+        $('#resultado').html('Carregando dados...');
+        this.retorno = '';
         
-        $(document).ready(function(){
-            
-            var arquivo = 'json/biblia/indice.json';
-            document.getElementById("titulo").innerHTML = qs['titulo'];
-            $('#resultado').html('Carregando dados...');
-            this.retorno = '';
-            
-            var tamanho;
-            
-            tamanho = qs['total'];
-        
-                            for (i = 1; i <= tamanho; i++)
-                            {
-                                
-                                this.retorno += '<a href="biblia_capitulo.html?livro=' + qs['livro']; 
-                                this.retorno += '&titulo=' + qs['titulo'];
-                                this.retorno += '&capitulo=' + [i];
-                                this.retorno += '&total=' + tamanho;
-                                this.retorno += '&tipo=1';
-                                this.retorno += '"class="btn m-b-xs">';
-                                this.retorno += [i];
-                                this.retorno += '</a>';
-                                
-                            }
-                    $('#resultado').html(this.retorno);
-                });
+        var tamanho;
+		        
+        tamanho = qs['total'];
+    
+                        for (i = 1; i <= tamanho; i++)
+                        {
+                            
+                            this.retorno += '<a href="biblia_capitulo.html?livro=' + qs['livro']; 
+                            this.retorno += '&titulo=' + qs['titulo'];
+                            this.retorno += '&capitulo=' + [i];
+                            this.retorno += '&total=' + tamanho;
+                            this.retorno += '&tipo=1';
+                            this.retorno += '"class="btn btn-success btn-block m-t-xs">';
+                            this.retorno += [i];
+                            this.retorno += '</a>';
+                            
+                        }
+                $('#resultado').html(this.retorno);
+            });
         </script>
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -150,19 +150,19 @@
             </div><!-- Page Sidebar -->
             <div class="page-inner">
             	<div class="page-title">
-                    <h3>Bíblia Sagrada</h3>
+                    <h3 id="titulo"></h3>
                     <div class="page-breadcrumb">
                         <ol class="breadcrumb">
-                            <li>Nova Versão Internacional</li>
+                            <li>Capítulos da Bíblia</li>
                         </ol>
                     </div>
                 </div>
                 <div id="main-wrapper">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-xs-12">
                             <div class="panel panel-white">
                                 <div class="panel-body">
-
+								 
     							<div id="resultado" align="center"></div>
 
                                 </div>
