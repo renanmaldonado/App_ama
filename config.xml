@@ -2,17 +2,17 @@
 <widget
     xmlns       = "http://www.w3.org/ns/widgets"
     xmlns:gap   = "http://phonegap.com/ns/1.0"
-    id          = "org.adventistas.ama"
+    id          = "org.adventistas.ulb"
     versionCode = "35"
     version     = "3.5.9">
     
     
-    <name>Agenda AMa</name>
+    <name>ABASE</name>
     <author email="rodrigo@rdorval.com" href="http://www.rdorval.com">
         Rodrigo Dias Dorval
     </author>
     <description>
-        Aplicativo oficial Associação Maranhense da IASD.
+        Aplicativo oficial Adventistas Bahia e Sergipe.
     </description>
     
     <feature name="LocalStorage">
