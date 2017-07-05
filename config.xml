@@ -2,12 +2,12 @@
 <widget
     xmlns       = "http://www.w3.org/ns/widgets"
     xmlns:gap   = "http://phonegap.com/ns/1.0"
-    id          = "org.adventistas.ulb"
-    versionCode = "35"
-    version     = "3.5.9">
+    id          = "org.adventistas.unb"
+    versionCode = "38"
+    version     = "3.8.9">
     
     
-    <name>AMA</name>
+    <name>AGENDA AMA</name>
     <author email="rodrigo@rdorval.com" href="http://www.rdorval.com">
         Rodrigo Dias Dorval
     </author>
