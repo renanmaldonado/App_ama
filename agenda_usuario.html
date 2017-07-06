@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        
         <!-- Title -->
         <title>Agenda AMa</title>
         
@@ -13,16 +14,109 @@
         <link href="assets/plugins/uniform/css/uniform.default.min.css" rel="stylesheet"/>
         <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="assets/plugins/fontawesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
-    
-        	
+        <link href="assets/plugins/line-icons/simple-line-icons.css" rel="stylesheet" type="text/css"/>	
+        <link href="assets/plugins/offcanvasmenueffects/css/menu_cornerbox.css" rel="stylesheet" type="text/css"/>	
+        <link href="assets/plugins/waves/waves.min.css" rel="stylesheet" type="text/css"/>	
+        <link href="assets/plugins/switchery/switchery.min.css" rel="stylesheet" type="text/css"/>
+        <link href="assets/plugins/3d-bold-navigation/css/style.css" rel="stylesheet" type="text/css"/>	
+        <link href="assets/plugins/slidepushmenus/css/component.css" rel="stylesheet" type="text/css"/>	
+        <link href="assets/plugins/vertical-timeline/css/style.css" rel="stylesheet" type="text/css">
+        
         <!-- Theme Styles -->
         <link href="assets/css/modern.min.css" rel="stylesheet" type="text/css"/>
         <link href="assets/css/themes/green.css" class="theme-color" rel="stylesheet" type="text/css"/>
         <link href="assets/css/custom.css" rel="stylesheet" type="text/css"/>
         
-             
         <script src="assets/plugins/3d-bold-navigation/js/modernizr.js"></script>
         <script src="assets/plugins/offcanvasmenueffects/js/snap.svg-min.js"></script>
+
+        <script src="assets/plugins/jquery/jquery-2.1.4.min.js"></script>
+        <script src="assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+		<script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            app.initialize();
+        </script>
+        <script>
+        function GetQueryString(a)
+        {
+            a = a || window.location.search.substr(1).split('&').concat(window.location.hash.substr(1).split("&"));
+        
+            if (typeof a === "string")
+                a = a.split("#").join("&").split("&");
+        
+            // se não há valores, retorna um objeto vazio
+            if (!a) return {};
+        
+            var b = {};
+            for (var i = 0; i < a.length; ++i)
+            {
+                // obtem array com chave/valor
+                var p = a[i].split('=');
+        
+                // se não houver valor, ignora o parametro
+                if (p.length != 2) continue;
+        
+                // adiciona a propriedade chave ao objeto de retorno
+                // com o valor decodificado, substituindo `+` por ` `
+                // para aceitar URLs codificadas com `+` ao invés de `%20`
+                b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+            }
+            // retorna o objeto criado
+            return b;
+        }
+        
+        // uso
+        var qs = GetQueryString();
+        
+        
+        $(document).ready(function(){
+            
+            var arquivo = "http://apps.unb.org.br/sistema/json/agenda_usuario.php?cod_user=" + qs['cod_user'];
+            
+            $('#resultado').html('Carregando dados...');
+                          
+            var retorno;
+            var qtde;
+           
+                // Estrutura de resultado.
+                $.getJSON(arquivo, function(data){
+                    this.qtd = data.Calendario.length;
+                    this.retorno = '';
+                    
+                    for (i = 0; i < this.qtd; i++)
+                    {
+                        
+			
+						this.retorno +='<div class="cd-timeline-block">';
+						this.retorno +='<div class="cd-timeline-img cd-success">';
+						this.retorno +='<i class="fa fa-calendar"></i>';
+						this.retorno +='</div>';
+						
+						this.retorno +='<div class="cd-timeline-content">';
+						this.retorno +='<h2>'+ data.Calendario[i].nome +'</h2>';
+						this.retorno +='<p>DEPARTAMENTO: '+ data.Calendario[i].nome_depto +' <br>';
+						if(data.Calendario[i].descricao != null)
+                        {
+						this.retorno +=' '+ data.Calendario[i].descricao + '</p>';
+						}
+						this.retorno +='<span class="cd-date">'+ data.Calendario[i].inicio +'';
+						if(data.Calendario[i].fim != null)
+                        {
+                        this.retorno += ' - ' + data.Calendario[i].fim;
+                        }
+						this.retorno +='</span>';
+						this.retorno +='</div>';
+						this.retorno +='</div>';
+    
+                    }
+                
+                    $('#resultado').html(this.retorno);
+                });
+        });
+        </script>
+
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -33,7 +127,7 @@
     </head>
     <body class="page-header-fixed">
         <main class="page-content content-wrap">
-                        <div class="navbar">
+            <div class="navbar">
                 <div class="navbar-inner">
                     <div class="sidebar-pusher">
                         <a href="javascript:void(0);" class="waves-effect waves-button waves-classic push-sidebar">
@@ -73,8 +167,8 @@
                 </div><!-- Page Sidebar Inner -->
             </div><!-- Page Sidebar -->
             <div class="page-inner">
-            	<div class="page-title">
-                    <h3>Sede Administrativa</h3>
+                <div class="page-title">
+                    <h3>Agenda de Eventos</h3>
                     <div class="page-breadcrumb">
                         <ol class="breadcrumb">
                             <li>Associação Maranhense</li>
@@ -84,28 +178,36 @@
                 <div id="main-wrapper">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="panel panel-white">
-                                <div class="panel-body">
-                                    <h2 class="m-t-xxl m-b-lg">Nossa Sede</h2>
-                                    <p align="justify">Endereço: Av. Daniel de la Touche, 53 <br> Maranhão Novo <br>Telefone: (98) 4009-4949<br>São Luís - MA</p>
-                                    <br>
-                                </div>
-                            </div>
+                            <section id="cd-timeline" class="cd-container">
+                                
+                             <div id="resultado"></div>
+
+                        
+                            </section> <!-- cd-timeline -->
                         </div>
                     </div><!-- Row -->
                 </div><!-- Main Wrapper -->
-               <div class="page-footer">
+                <div class="page-footer">
                     <p align="left">Associação Maranhense da Igreja Adventista do Sétimo Dia</p>
                 </div>
             </div><!-- Page Inner -->
         </main><!-- Page Content -->
+        	
 
         <!-- Javascripts -->
-        <script src="assets/plugins/jquery/jquery-2.1.4.min.js"></script>
-        <script src="assets/plugins/jquery-ui/jquery-ui.min.js"></script>
-        <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-        <script src="assets/plugins/waves/waves.min.js"></script>
-        <script src="assets/js/modern.js"></script>
+	<script src="assets/plugins/pace-master/pace.min.js"></script>
+    <script src="assets/plugins/jquery-blockui/jquery.blockui.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="assets/plugins/switchery/switchery.min.js"></script>
+    <script src="assets/plugins/uniform/jquery.uniform.min.js"></script>
+    <script src="assets/plugins/offcanvasmenueffects/js/classie.js"></script>
+    <script src="assets/plugins/offcanvasmenueffects/js/main.js"></script>
+    <script src="assets/plugins/waves/waves.min.js"></script>
+    <script src="assets/plugins/3d-bold-navigation/js/main.js"></script>
+    <script src="assets/plugins/vertical-timeline/js/main.js"></script>
+    <script src="assets/js/modern.min.js"></script>
+    <script src="assets/js/pages/timeline.js"></script>
         
     </body>
 </html>
